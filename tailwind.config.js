@@ -1,10 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export const darkMode = ["class"];
 export const content = [
-  './pages/**/*.{js,jsx}',
-  './components/**/*.{js,jsx}',
-  './app/**/*.{js,jsx}',
-  './src/**/*.{js,jsx}',
+  "./pages/**/*.{js,jsx}",
+  "./components/**/*.{js,jsx}",
+  "./app/**/*.{js,jsx}",
+  "./src/**/*.{js,jsx}",
+  "./index.html",
+  "./src/**/*.{js,ts,jsx,tsx}",
 ];
 export const prefix = "";
 export const theme = {
@@ -16,8 +18,15 @@ export const theme = {
     },
   },
   extend: {
+    fontFamily: {
+      inter: ["Inter", "sans-serif"],
+    },
     colors: {
-      'main-blue': '#004d95',
+      "main-blue": "#004d95",
+      "dark-color": "#09090b",
+      "gray-color": "#18181a",
+      "white-txt": "#fafafa",
+      "gray-txt": "#a1a1aa",
       border: "hsl(var(--border))",
       input: "hsl(var(--input))",
       ring: "hsl(var(--ring))",
@@ -73,4 +82,4 @@ export const theme = {
     },
   },
 };
-export const plugins = [("tailwindcss-animate")];
+export const plugins = ["tailwindcss-animate"];
