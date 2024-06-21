@@ -75,10 +75,34 @@ export const theme = {
         from: { height: "var(--radix-accordion-content-height)" },
         to: { height: "0" },
       },
+      "entrance-left": {
+        from: {
+          opacity: "0",
+          transform: "translateX(-20px)",
+        },
+        to: {
+          opacity: "initial",
+          transform: "initial",
+        },
+      },
+      "spin-entrance": {
+        from: {
+          opacity: "0",
+          scale: ".4",
+          transform: "rotate(90deg)",
+        },
+        to: {
+          opacity: "initial",
+          transform: "rotate(360deg)",
+          scale: "initial",
+        },
+      },
     },
     animation: {
       "accordion-down": "accordion-down 0.2s ease-out",
       "accordion-up": "accordion-up 0.2s ease-out",
+      "entrance-left": "entrance-left 0.3s forwards",
+      "spin-entrance": "spin-entrance 1s ease-out",
     },
   },
 };

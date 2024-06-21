@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Alimentação",
+    "descr": "Será utilizada para alimentar o painel elétrico e o motor.",
+    "options": [
+      {
+        "name": "Monofásico",
+        "value": "mono"
+      },
+      {
+        "name": "Trifásico",
+        "value": "tri"
+      }
+    ]
+  },
+  {
+    "title": "Tensão",
+    "descr": "Utilizada para alimentar o painel elétrico e o motor.",
+    "options": [
+      {
+        "name": "220V",
+        "value": "220V"
+      },
+      {
+        "name": "380V",
+        "value": "380V"
+      },
+      {
+        "name": "440V",
+        "value": "440V"
+      }
+    ]
+  },
+  {
+    "title": "Proteção fixa monitorada",
+    "descr": "Proteção de poliborcabonato. Desliga esmeril quando levantada.",
+    "options": [
+      {
+        "name": "Sim",
+        "value": "monitorada"
+      },
+      {
+        "name": "Não",
+        "value": "sem monitorada"
+      }
+    ]
+  },
+  {
+    "title": "Freio",
+    "descr": "Inversor WEG CFW500 é utilizado para frear. Maior impacto no valor da venda final.",
+    "options": [
+      {
+        "name": "Com freio",
+        "value": "freio"
+      },
+      {
+        "name": "Sem freio",
+        "value": "sem freio"
+      }
+    ]
+  }
+]

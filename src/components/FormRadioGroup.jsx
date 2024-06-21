@@ -8,14 +8,19 @@ const FormRadioGroup = ({
   title,
   options,
   descr,
-  setEsmerilCongigs,
+  setEsmerilConfigs,
   specified,
 }) => {
-  const handleClick = ({ target }) => {
-    setEsmerilCongigs((prev) => [...prev, target.value]);
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setEsmerilConfigs((prevConfigs) => {
+      const newConfigs = {
+        ...prevConfigs,
+        [title]: value,
+      };
+      return newConfigs;
+    });
   };
-
-  console.log(options);
 
   return (
     <div className="my-10">
@@ -24,16 +29,22 @@ const FormRadioGroup = ({
         {descr && <SubHeader> {descr} </SubHeader>}
       </div>
       <RadioGroup className="flex items-center gap-6">
-        {options.map(({ name, value }, idx) => {
+        {options.map(({ name, value }) => {
           return (
-            <div key={idx} className="flex items-center space-x-2">
-              <RadioGroupItem
-                disabled={specified}
-                onClick={handleClick}
-                value={value}
-                id={name}
-              />
-              <Label htmlFor={name}> {name} </Label>
+            <div key={name} className="flex items-center space-x-2">
+              <div>
+                <RadioGroupItem
+                  required={true}
+                  disabled={specified}
+                  value={value}
+                  id={name}
+                  onClick={handleChange}
+                />
+                <Label htmlFor={name} className="cursor-pointer">
+                  {" "}
+                  {name}{" "}
+                </Label>
+              </div>
             </div>
           );
         })}

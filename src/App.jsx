@@ -1,4 +1,6 @@
 import { useState } from "react";
+import specs from "@/data/specs.json";
+import allEsmeris from "@/data/allEsmeris.json";
 
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -8,104 +10,96 @@ import Footer from "./components/Footer";
 import FormRadioGroup from "./components/FormRadioGroup";
 import { Button } from "./components/ui/button";
 
-function App() {
-  const [esmerilConfigs, setEsmerilCongigs] = useState([]);
-  const [specified, setSpecified] = useState(false);
+import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 
-  const specs = [
-    {
-      title: "Alimentação",
-      descr: "Será utilizada para alimentar o painel elétrico e o motor.",
-      options: [
-        {
-          name: "Monofásico",
-          value: "mono",
-        },
-        {
-          name: "Trifásico",
-          value: "tri",
-        },
-      ],
-    },
-    {
-      title: "Tensão",
-      descr: "Utilizada para alimentar o painel elétrico e o motor.",
-      options: [
-        {
-          name: "220V",
-          value: "220",
-        },
-        {
-          name: "380V",
-          value: "380",
-        },
-        {
-          name: "440V",
-          value: "440",
-        },
-      ],
-    },
-    {
-      title: "Proteção fixa monitorada",
-      descr: "Proteção de poliborcabonato. Desliga esmeril quando levantada.",
-      options: [
-        {
-          name: "Sim",
-          value: "monitorada",
-        },
-        {
-          name: "Não",
-          value: "sem monitorada",
-        },
-      ],
-    },
-    {
-      title: "Freio",
-      descr:
-        "Inversor WEG CFW500 é utilizado para frear. Maior impacto no valor da venda final.",
-      options: [
-        {
-          name: "Com freio",
-          value: "freio",
-        },
-        {
-          name: "Sem freio",
-          value: "sem freio",
-        },
-      ],
-    },
-  ];
+import SpecificiedEsmeril from "./components/SpecificiedEsmeril";
+
+import { Loader2 } from "lucide-react";
+
+function App() {
+  const [esmerilConfigs, setEsmerilConfigs] = useState({});
+  const [specified, setSpecified] = useState(false);
+  const [esmeril, setEsmeril] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const specifyEsmeril = () => {
+    const matchIndex = allEsmeris.findIndex(
+      (esmeril) =>
+        esmeril.specs.Alimentação === esmerilConfigs.Alimentação &&
+        esmeril.specs.Tensão === esmerilConfigs.Tensão &&
+        esmeril.specs["Proteção fixa monitorada"] ===
+          esmerilConfigs["Proteção fixa monitorada"] &&
+        esmeril.specs.Freio === esmerilConfigs.Freio,
+    );
+
+    if (matchIndex !== -1) {
+      setEsmeril(allEsmeris[matchIndex]);
+      return allEsmeris[matchIndex];
+    } else {
+      setEsmeril(undefined);
+    }
+  };
+
+  const { toast } = useToast();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSpecified(true);
+    setIsLoading(true);
+    const esmerilConfigsLength = Object.keys(esmerilConfigs).length;
+    const specsLength = specs.length;
 
-    console.log(esmerilConfigs);
+    if (esmerilConfigsLength !== specsLength) {
+      setIsLoading(false);
+      toast({
+        title: "Erro",
+        description: "Por favor selecione todas as especificações.",
+        variant: "destructive",
+      });
+    } else {
+      setTimeout(() => {
+        setSpecified(true);
+        setIsLoading(false);
+        specifyEsmeril();
+      }, 1000);
+    }
   };
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Header />
-      <div className="h-[calc(100dvh-1.5rem+5rem)]">
-        <section className="mx-auto my-7 max-w-[75rem] px-6">
+
+      <section className="animate-entrance-left min-h-[calc(100dvh-1.5rem+5rem)]">
+        <div className="mx-auto my-7 max-w-[75rem] px-6">
           <form onSubmit={handleSubmit}>
-            {specs.map(({ title, options, descr }, idx) => (
+            {specs.map(({ title, options, descr }) => (
               <FormRadioGroup
-                key={idx}
+                key={title}
                 title={title}
                 options={options}
                 descr={descr}
-                setEsmerilCongigs={setEsmerilCongigs}
-                specified={specified}
+                setEsmerilConfigs={setEsmerilConfigs}
+                specified={isLoading}
+                // TODO: disabled when loading && specified
               />
             ))}
-            <Button className="my-4" type="submit">
-              Especificar Motoesmeril
-            </Button>
+            {specified ? (
+              <SpecificiedEsmeril esmeril={esmeril} />
+            ) : isLoading ? (
+              <Button disabled className="my-4">
+                Carregando... <Loader2 className="ml-3 h-4 w-4 animate-spin" />
+              </Button>
+            ) : (
+              <Button className="my-4" type="submit">
+                Especificar Motoesmeril
+              </Button>
+            )}
           </form>
-        </section>
-      </div>
+        </div>
+      </section>
+
       <Footer />
+      <Toaster />
     </ThemeProvider>
   );
 }
