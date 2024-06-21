@@ -3,7 +3,7 @@ import { ModeToggle } from "./ui/mode-toggle";
 
 const Header = () => {
   return (
-    <header className="flex justify-between px-6">
+    <header className="mx-auto flex h-20 max-w-[75rem] items-center justify-between px-6">
       <div>
         <BlueCircle className="" />
       </div>
