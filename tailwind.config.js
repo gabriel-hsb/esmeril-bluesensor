@@ -23,10 +23,6 @@ export const theme = {
     },
     colors: {
       "main-blue": "#004d95",
-      "dark-color": "#09090b",
-      "gray-color": "#18181a",
-      "white-txt": "#fafafa",
-      "gray-txt": "#a1a1aa",
       border: "hsl(var(--border))",
       input: "hsl(var(--input))",
       ring: "hsl(var(--ring))",

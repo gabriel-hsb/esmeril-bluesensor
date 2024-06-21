@@ -1,29 +1,43 @@
-import CompH2 from "./ui/CompH2";
+import { useState, useEffect } from "react";
 
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
+import CompH2 from "./ui/CompH2";
 import SubHeader from "./ui/SubHeader";
 
 const FormRadioGroup = ({
   title,
   options,
   descr,
-  setEsmerilConfigs,
-  specified,
+  setChosenEsmerilConfigs,
+  specificationDone,
+  isLoading,
 }) => {
-  const handleChange = (e) => {
-    const { value } = e.target;
-    setEsmerilConfigs((prevConfigs) => {
+  const [disableInputs, setDisableInputs] = useState(false);
+
+  const handleRadioInputChange = ({ target }) => {
+    const { value } = target;
+
+    setChosenEsmerilConfigs((prevChosenEsmerilConfigs) => {
       const newConfigs = {
-        ...prevConfigs,
+        ...prevChosenEsmerilConfigs,
         [title]: value,
       };
       return newConfigs;
     });
   };
 
+  useEffect(() => {
+    if (isLoading || specificationDone) {
+      setDisableInputs(true);
+    } else {
+      setDisableInputs(false);
+    }
+  }, [isLoading, specificationDone]);
+
   return (
-    <div className="my-10">
+    <div className="my-8  sm:my-10">
       <div className="mb-4">
         <CompH2> {title} </CompH2>
         {descr && <SubHeader> {descr} </SubHeader>}
@@ -35,10 +49,10 @@ const FormRadioGroup = ({
               <div>
                 <RadioGroupItem
                   required={true}
-                  disabled={specified}
+                  disabled={disableInputs}
                   value={value}
                   id={name}
-                  onClick={handleChange}
+                  onClick={handleRadioInputChange}
                 />
                 <Label htmlFor={name} className="cursor-pointer">
                   {" "}

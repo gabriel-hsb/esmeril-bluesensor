@@ -1,8 +1,9 @@
 import { Button } from "./ui/button";
+import EsmerilListItem from "./esmerilResults/EsmerilListItem";
 
 import { FileText, MessagesSquare, Timer } from "lucide-react";
 
-const SpecificiedEsmeril = ({ esmeril }) => {
+const EsmerilResult = ({ esmeril }) => {
   const restart = () => {
     location.reload();
     window.scrollTo(0, 0);
@@ -12,22 +13,20 @@ const SpecificiedEsmeril = ({ esmeril }) => {
     const { projectLink, code, descr, price } = esmeril;
 
     return (
-      <section className="animate-entrance-left mt-16 text-lg">
+      <section className="mt-16 animate-entrance-left text-base sm:text-lg">
         <ul className="mb-6 flex w-fit flex-col gap-1 rounded-lg border-y border-l py-1 pl-2">
-          <li className="mb-1 w-full border-b p-1">
-            <span className="text-muted-foreground">Código:</span>{" "}
-            <span className="text-xl">{code}</span>
-          </li>
-          <li className="mb-1 w-full border-b p-1">
-            <span className="text-muted-foreground">Descrição:</span>{" "}
-            <span className="text-xl">{descr}</span>
-          </li>
+          <EsmerilListItem title={"Código"} value={code} />
+          <EsmerilListItem title={"Descrição"} value={descr} />
+          <EsmerilListItem title={"Descrição"} value={descr} />
+
+          {/* TODO: modify component to work with list item below */}
+
           <li className="mb-1 w-full border-b p-1">
             <span className="text-muted-foreground">Preço custo: </span>
             {price ? (
-              <span className="text-xl">{price}</span>
+              <span className="text-lg sm:text-xl">{price}</span>
             ) : (
-              <span className="text-xl text-red-200">
+              <span className="text-lg text-red-500 dark:text-red-200 sm:text-xl">
                 Valor ainda não definido
               </span>
             )}
@@ -54,11 +53,7 @@ const SpecificiedEsmeril = ({ esmeril }) => {
             </Button>
           ) : (
             <div className="flex items-center gap-4">
-              <Button
-                variant="outline"
-                disabled
-                className="cursor-not-allowed text-white"
-              >
+              <Button variant="outline" disabled className="text-white">
                 Projeto em andamento <Timer className="ml-2 size-4" />
               </Button>
               <Button asChild>
@@ -72,7 +67,6 @@ const SpecificiedEsmeril = ({ esmeril }) => {
             </div>
           )}
         </div>
-
         <Button variant="outline" className="mb-8 mt-16" onClick={restart}>
           Reiniciar
         </Button>
@@ -81,7 +75,7 @@ const SpecificiedEsmeril = ({ esmeril }) => {
   } else {
     return (
       <section className="animate-entrance-left">
-        <p className="mb-8 text-red-200">
+        <p className="mb-8 text-red-500 dark:text-red-200">
           Desculpe, esse modelo de Motoesmeril ainda não foi criado
         </p>
         <div className="flex gap-4">
@@ -102,4 +96,4 @@ const SpecificiedEsmeril = ({ esmeril }) => {
   }
 };
 
-export default SpecificiedEsmeril;
+export default EsmerilResult;

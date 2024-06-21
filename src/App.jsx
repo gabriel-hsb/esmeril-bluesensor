@@ -1,67 +1,69 @@
 import { useState } from "react";
-import specs from "@/data/specs.json";
-import allEsmeris from "@/data/allEsmeris.json";
 
+import { Loader2 } from "lucide-react";
 import { ThemeProvider } from "@/components/theme-provider";
-
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-
-import FormRadioGroup from "./components/FormRadioGroup";
-import { Button } from "./components/ui/button";
-
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 
-import SpecificiedEsmeril from "./components/SpecificiedEsmeril";
+// specs: all possible specs for an esmeril
+import esmerilSpecs from "@/data/specs.json";
 
-import { Loader2 } from "lucide-react";
+// allEsmeris: all created esmeris (matches with specs above)
+import allExistingEsmeris from "@/data/allEsmeris.json";
+
+import FormRadioGroup from "@/components/FormRadioGroup";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import EsmerilResult from "@/components/EsmerilResult";
 
 function App() {
-  const [esmerilConfigs, setEsmerilConfigs] = useState({});
-  const [specified, setSpecified] = useState(false);
+  const [chosenEsmerilConfigs, setChosenEsmerilConfigs] = useState({});
+  const [specificationDone, setSpecificationDone] = useState(false);
   const [esmeril, setEsmeril] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const { toast } = useToast(); // shadcn ui
+
   const specifyEsmeril = () => {
-    const matchIndex = allEsmeris.findIndex(
+    // find which esmeril (from allEsmeris.json) matches chosen specs
+    const matchIndex = allExistingEsmeris.findIndex(
       (esmeril) =>
-        esmeril.specs.Alimentação === esmerilConfigs.Alimentação &&
-        esmeril.specs.Tensão === esmerilConfigs.Tensão &&
+        esmeril.specs.Alimentação === chosenEsmerilConfigs.Alimentação &&
+        esmeril.specs.Tensão === chosenEsmerilConfigs.Tensão &&
         esmeril.specs["Proteção fixa monitorada"] ===
-          esmerilConfigs["Proteção fixa monitorada"] &&
-        esmeril.specs.Freio === esmerilConfigs.Freio,
+          chosenEsmerilConfigs["Proteção fixa monitorada"] &&
+        esmeril.specs.Freio === chosenEsmerilConfigs.Freio,
     );
 
     if (matchIndex !== -1) {
-      setEsmeril(allEsmeris[matchIndex]);
-      return allEsmeris[matchIndex];
+      setEsmeril(allExistingEsmeris[matchIndex]);
     } else {
       setEsmeril(undefined);
     }
   };
 
-  const { toast } = useToast();
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const esmerilConfigsLength = Object.keys(esmerilConfigs).length;
-    const specsLength = specs.length;
 
-    if (esmerilConfigsLength !== specsLength) {
+    const esmerilConfigsLength = Object.keys(chosenEsmerilConfigs).length;
+    const specsLength = esmerilSpecs.length;
+
+    if (esmerilConfigsLength === specsLength) {
+      // timeout just for the UI animation.
+      setTimeout(() => {
+        setSpecificationDone(true);
+        setIsLoading(false);
+        specifyEsmeril();
+      }, 1000);
+    } else {
       setIsLoading(false);
       toast({
         title: "Erro",
         description: "Por favor selecione todas as especificações.",
         variant: "destructive",
       });
-    } else {
-      setTimeout(() => {
-        setSpecified(true);
-        setIsLoading(false);
-        specifyEsmeril();
-      }, 1000);
     }
   };
 
@@ -69,22 +71,22 @@ function App() {
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Header />
 
-      <section className="animate-entrance-left min-h-[calc(100dvh-1.5rem+5rem)]">
-        <div className="mx-auto my-7 max-w-[75rem] px-6">
+      <section className="min-h-[calc(100dvh-1.5rem+5rem)] animate-entrance-left">
+        <div className="mx-auto sm:my-7 my-2 max-w-[75rem] px-3 sm:px-6">
           <form onSubmit={handleSubmit}>
-            {specs.map(({ title, options, descr }) => (
+            {esmerilSpecs.map(({ title, options, descr }) => (
               <FormRadioGroup
                 key={title}
                 title={title}
                 options={options}
                 descr={descr}
-                setEsmerilConfigs={setEsmerilConfigs}
-                specified={isLoading}
-                // TODO: disabled when loading && specified
+                setChosenEsmerilConfigs={setChosenEsmerilConfigs}
+                specificationDone={specificationDone}
+                isLoading={isLoading}
               />
             ))}
-            {specified ? (
-              <SpecificiedEsmeril esmeril={esmeril} />
+            {specificationDone ? (
+              <EsmerilResult esmeril={esmeril} />
             ) : isLoading ? (
               <Button disabled className="my-4">
                 Carregando... <Loader2 className="ml-3 h-4 w-4 animate-spin" />

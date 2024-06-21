@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <footer className="py-2 text-center dark:bg-zinc-950">
       <TooltipProvider>
-        feito por{" "}
+        Feito por{" "}
         <Tooltip>
           <TooltipTrigger>
             <a
@@ -17,7 +17,7 @@ const Footer = () => {
               target="_blank"
               className="underline"
             >
-              gabriel-hsb
+              gabriel-hsb,
             </a>
           </TooltipTrigger>
           <TooltipContent>
@@ -27,7 +27,11 @@ const Footer = () => {
             />
           </TooltipContent>
         </Tooltip>
-      </TooltipProvider>
+      </TooltipProvider>{" "}
+      para{" "}
+      <a href="https://bluesensor.com.br/" target="_blank" className="underline">
+        BlueSensor
+      </a>
     </footer>
   );
 };
