@@ -13,32 +13,34 @@ const EsmerilResult = ({ esmeril }) => {
     const { projectLink, code, descr, price } = esmeril;
 
     return (
-      <section className="mt-16 animate-entrance-left text-base sm:text-lg">
-        <ul className="mb-6 flex w-fit flex-col gap-1 rounded-lg border-y border-l py-1 pl-2">
+      <section className="mt-16 text-base animate-entrance-left sm:text-lg">
+        <ul className="flex flex-col gap-1 py-1 pl-2 mb-6 border-l rounded-lg w-fit border-y">
           <EsmerilListItem title={"Código"} value={code} />
           <EsmerilListItem title={"Descrição"} value={descr} />
-          <EsmerilListItem title={"Descrição"} value={descr} />
 
-          {/* TODO: modify component to work with list item below */}
-
-          <li className="mb-1 w-full border-b p-1">
-            <span className="text-muted-foreground">Preço custo: </span>
+          <li className="w-full p-1 mb-1 border-b">
+            <span className="text-muted-foreground">Preço de venda: </span>
             {price ? (
-              <span className="text-lg sm:text-xl">{price}</span>
+              <span className="text-lg sm:text-xl">
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(price)}
+              </span>
             ) : (
               <span className="text-lg text-red-500 dark:text-red-200 sm:text-xl">
                 Valor ainda não definido
               </span>
             )}
           </li>
-          <li className="mb-1 w-full p-1">
+          <li className="w-full p-1 mb-1">
             <span className="text-muted-foreground">
               Todos modelos de Motoesmeril acompanham:
             </span>
             <ul className="ml-6 list-disc [&>li]:mt-2">
               <li>Motoesmeril com pedra (marca Motomil)</li>
               <li>Tomada + Plugue Famatel</li>
-              <li>Proteção fixa de acrílico</li>
+              <li>Proteção de policarbonato</li>
               <li>Componentes WEG</li>
             </ul>
           </li>
@@ -59,7 +61,7 @@ const EsmerilResult = ({ esmeril }) => {
               <Button asChild>
                 <a
                   target="_blank"
-                  href="https://api.whatsapp.com/send?phone=15991254967"
+                  href="https://api.whatsapp.com/send?phone=5515991963805"
                 >
                   Solicitar projeto <MessagesSquare className="ml-2 size-5" />
                 </a>
@@ -67,7 +69,7 @@ const EsmerilResult = ({ esmeril }) => {
             </div>
           )}
         </div>
-        <Button variant="outline" className="mb-8 mt-16" onClick={restart}>
+        <Button variant="outline" className="mt-16 mb-8" onClick={restart}>
           Reiniciar
         </Button>
       </section>

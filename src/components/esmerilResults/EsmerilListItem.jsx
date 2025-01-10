@@ -1,9 +1,8 @@
-const EsmerilListItem = ({ title, value, children }, ...props) => {
+const EsmerilListItem = ({ title, value }) => {
   return (
-    <li {...props} className="mb-1 w-full border-b p-1">
+    <li className="w-full p-1 mb-1 border-b">
       <span className="text-muted-foreground">{title}:</span>{" "}
       <span className="text-lg sm:text-xl">{value}</span>
-      {children}
     </li>
   );
 };

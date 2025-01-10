@@ -29,11 +29,7 @@ function App() {
     // find which esmeril (from allEsmeris.json) matches chosen specs
     const matchIndex = allExistingEsmeris.findIndex(
       (esmeril) =>
-        esmeril.specs.Alimentação === chosenEsmerilConfigs.Alimentação &&
-        esmeril.specs.Tensão === chosenEsmerilConfigs.Tensão &&
-        esmeril.specs["Proteção fixa monitorada"] ===
-          chosenEsmerilConfigs["Proteção fixa monitorada"] &&
-        esmeril.specs.Freio === chosenEsmerilConfigs.Freio,
+        JSON.stringify(esmeril.specs) === JSON.stringify(chosenEsmerilConfigs),
     );
 
     if (matchIndex !== -1) {
@@ -72,7 +68,7 @@ function App() {
       <Header />
 
       <section className="min-h-[calc(100dvh-1.5rem+5rem)] animate-entrance-left">
-        <div className="mx-auto sm:my-7 my-2 max-w-[75rem] px-3 sm:px-6">
+        <div className="mx-auto my-2 max-w-[75rem] px-3 sm:my-7 sm:px-6">
           <form onSubmit={handleSubmit}>
             {esmerilSpecs.map(({ title, options, descr }) => (
               <FormRadioGroup
@@ -89,7 +85,7 @@ function App() {
               <EsmerilResult esmeril={esmeril} />
             ) : isLoading ? (
               <Button disabled className="my-4">
-                Carregando... <Loader2 className="ml-3 h-4 w-4 animate-spin" />
+                Carregando... <Loader2 className="w-4 h-4 ml-3 animate-spin" />
               </Button>
             ) : (
               <Button className="my-4" type="submit">

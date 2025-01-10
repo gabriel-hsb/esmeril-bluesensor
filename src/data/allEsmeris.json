@@ -2,7 +2,7 @@
   {
     "code": "512-0020-003",
     "descr": "MOTOESMERIL NR12, 1CV, 220V MONO, REBOLO 8 POL",
-    "price": null,
+    "price": 12500,
     "projectLink": "https://1drv.ms/b/s!AjtVi83xHB7dgYFu7Pjs5NU_2x9eig?e=X5UbdP",
     "specs": {
       "Alimentação": "mono",
@@ -14,7 +14,7 @@
   {
     "code": "512-0020-004",
     "descr": "MOTOESMERIL NR12, 1CV, 220V TRIF, REBOLO POL",
-    "price": null,
+    "price": 12500,
     "projectLink": "",
     "specs": {
       "Alimentação": "tri",
@@ -26,7 +26,7 @@
   {
     "code": "512-0020-005",
     "descr": "MOTOESMERIL NR12, 1CV, 380V + N, REBOLO 8POL",
-    "price": null,
+    "price": 13000,
     "projectLink": "",
     "specs": {
       "Alimentação": "tri",
@@ -57,6 +57,18 @@
       "Tensão": "380V",
       "Proteção fixa monitorada": "sem monitorada",
       "Freio": "freio"
+    }
+  },
+  {
+    "code": "512-0020-013",
+    "descr": "MOTOESMERIL NR12, 1CV, 220V MONO, PROT MONITORADA, REBOLO 8",
+    "price": 15000,
+    "projectLink": "",
+    "specs": {
+      "Alimentação": "mono",
+      "Tensão": "220V",
+      "Proteção fixa monitorada": "monitorada",
+      "Freio": "sem freio"
     }
   }
 ]
